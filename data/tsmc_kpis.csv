@@ -1,0 +1,26 @@
+Pillar,Category,KPI,Unit,2020,2021,2022,2023,2024
+E,Carbon,Scope 1 GHG Emissions,tCO2e,2004841,2151937,2018789,1596031,1825872
+E,Carbon,Scope 2 GHG Emissions (Market-Based),tCO2e,7459856,8152497,9539765,10187387,10957397
+E,Carbon,Scope 2 GHG Emissions (Location-Based),tCO2e,8282509,9196964,10887145,11466118,12674921
+E,Carbon,Scope 3 GHG Emissions (Total),tCO2e,5511486,6049256,7429158,7616655,8223173
+E,Carbon,Carbon Intensity (per $M Revenue),tCO2e/$M,197.78,181.34,152.32,170.05,144.82
+E,Energy,Total Energy Consumption,GWh,16919,19192,22423,24775,27477
+E,Energy,Renewable Energy Percentage,%,7.6,9.2,10.4,11.2,14.1
+E,Water,Total Water Withdrawal,Million MT,77.3,82.8,105.0,113.6,128.8
+E,Waste,Total Waste Generated,MT,575740,674703,744019,656841,789208
+E,Water,Water Recycled / Reused,%,86.4,85.4,85.7,90.3,88.1
+E,Waste,Waste Diversion Rate (not to landfill),%,95.0,95.0,96.0,96.0,97.0
+E,Waste,Hazardous Waste Generated,MT,298400,339623,401215,371236,445152
+S,Workforce,Total Number of Employees,People,56831,65152,73090,76478,83825
+S,Diversity,Women in Total Workforce,%,37.1,35.4,34.4,34.2,33.7
+S,Diversity,Women in Senior Management,%,10.0,8.3,6.1,5.9,11.4
+S,Safety,Total Recordable Incident Rate (TRIR),per 1000,0.311,0.252,0.145,0.156,0.133
+S,Workforce,Voluntary Employee Turnover Rate,%,5.1,6.7,6.5,3.5,3.4
+S,Training,Average Training Hours per Employee,Hours,16.3,48.9,69.5,85.4,100.5
+G,Board,Total Board Size,Directors,10,10,10,10,10
+G,Board,Board Independence,%,60.0,60.0,60.0,60.0,70.0
+G,Board,Women on Board,%,10.0,10.0,10.0,10.0,20.0
+Financial,Performance,Annual Revenue,$M,47855,57848,75881,69295,88268
+Financial,Performance,EBITDA Margin,%,63.0,64.0,69.0,65.0,69.0
+Financial,Performance,Capital Expenditure,$M,17186,30072,36342,30442,29755
+Financial,Performance,R&D Expenditure,$M,3695,4480,5469,5844,6227
