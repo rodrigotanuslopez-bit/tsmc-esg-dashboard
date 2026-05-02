@@ -203,7 +203,6 @@ with tab2:
             marker=dict(size=12, line=dict(width=2, color="white")),
             name="Actual",
         ))
-        # Target reference lines
         fig_r.add_hline(y=60, line_dash="dash", line_color=COLORS["gov_gold"],
                         annotation_text="RE60 by 2030 target",
                         annotation_position="bottom right")
@@ -306,77 +305,89 @@ with tab4:
         "are translating into demonstrable performance even as absolute waste grows with capacity."
     )
 
-# ---------------- NET-ZERO ----------------
+# ---------------- NET-ZERO (Three Scenarios) ----------------
 with tab5:
-    st.markdown("#### Detailed Net-Zero 2050 Pathway")
+    st.markdown("#### Detailed Net-Zero 2050 Scenario Analysis")
+    st.markdown(
+        "Compares total emissions (Scope 1 + Scope 2 Market + Scope 3) across three "
+        "forward-looking scenarios from 2019 through 2050."
+    )
 
     nz = load_net_zero()
-    hist_years = [2020, 2021, 2022, 2023, 2024]
-    hist_emissions = [
-        get_kpi("Scope 1 GHG Emissions", y) + get_kpi("Scope 2 GHG Emissions (Market-Based)", y)
-        for y in hist_years
-    ]
 
     fig = go.Figure()
 
-    # Historical emissions area
+    # Scenario 1: BAU
     fig.add_trace(go.Scatter(
-        x=hist_years, y=hist_emissions,
-        mode="lines+markers", name="Historical (Scope 1+2)",
-        line=dict(color=COLORS["tsmc_red"], width=4),
-        marker=dict(size=10, line=dict(width=2, color="white")),
-        fill="tozeroy", fillcolor="rgba(200, 16, 46, 0.15)",
+        x=nz["Year"], y=nz["BAU"],
+        mode="lines+markers", name="Scenario 1: Business as Usual",
+        line=dict(color=COLORS["tsmc_red"], width=3),
+        marker=dict(size=6),
+        fill="tozeroy", fillcolor="rgba(200, 16, 46, 0.08)",
+        hovertemplate="<b>BAU - %{x}</b><br>%{y:,.0f} tCO2e<extra></extra>",
     ))
 
-    # Commitment line
+    # Scenario 2: Net Zero linear
     fig.add_trace(go.Scatter(
-        x=nz["Year"], y=nz["Net_Zero_Commitment_tCO2e"],
-        mode="lines", name="Net-Zero commitment",
-        line=dict(color=COLORS["env_green"], width=3, dash="dash"),
-        fill="tozeroy", fillcolor="rgba(46, 125, 50, 0.10)",
+        x=nz["Year"], y=nz["NetZero"],
+        mode="lines+markers", name="Scenario 2: Net Zero (linear)",
+        line=dict(color=COLORS["social_blue"], width=3, dash="dash"),
+        marker=dict(size=6),
+        hovertemplate="<b>Net Zero - %{x}</b><br>%{y:,.0f} tCO2e<extra></extra>",
     ))
 
-    # Connector
+    # Scenario 3: Proposed Actions
     fig.add_trace(go.Scatter(
-        x=[2024, 2025], y=[hist_emissions[-1], nz["Net_Zero_Commitment_tCO2e"].iloc[0]],
-        mode="lines", line=dict(color=COLORS["tsmc_charcoal"], width=2, dash="dot"),
-        showlegend=False, hoverinfo="skip",
+        x=nz["Year"], y=nz["ProposedActions"],
+        mode="lines+markers", name="Scenario 3: Proposed Actions",
+        line=dict(color=COLORS["env_green"], width=4),
+        marker=dict(size=7),
+        hovertemplate="<b>Proposed - %{x}</b><br>%{y:,.0f} tCO2e<extra></extra>",
     ))
 
-    # Milestones
-    val_2030 = nz[nz["Year"] == 2030]["Net_Zero_Commitment_tCO2e"].iloc[0]
-    val_2040 = nz[nz["Year"] == 2040]["Net_Zero_Commitment_tCO2e"].iloc[0]
-    val_2050 = nz[nz["Year"] == 2050]["Net_Zero_Commitment_tCO2e"].iloc[0]
+    fig.add_vline(x=2024, line_dash="dot", line_color="rgba(0,0,0,0.3)",
+                  annotation_text="Historical / Forecast", annotation_position="top")
+
+    # Milestone stars on Proposed Actions
+    val_2030 = nz[nz["Year"] == 2030]["ProposedActions"].iloc[0]
+    val_2040 = nz[nz["Year"] == 2040]["ProposedActions"].iloc[0]
     fig.add_trace(go.Scatter(
-        x=[2030, 2040, 2050], y=[val_2030, val_2040, val_2050],
+        x=[2030, 2040, 2050], y=[val_2030, val_2040, 0],
         mode="markers+text",
         marker=dict(size=20, color=[COLORS["gov_gold"], COLORS["social_blue"], COLORS["env_green"]],
                     symbol="star", line=dict(width=2, color="white")),
-        text=["2030<br>back to 2020 levels", "2040<br>RE100", "2050<br>Net-Zero"],
+        text=["2030<br>back to 2020", "2040<br>RE100", "2050<br>Net-Zero"],
         textposition="top center", textfont=dict(size=10),
         showlegend=False,
     ))
 
     fig.update_layout(
-        height=520, plot_bgcolor="white", paper_bgcolor="white",
+        height=560, plot_bgcolor="white", paper_bgcolor="white",
         xaxis=dict(title="<b>Year</b>", tickmode="linear", dtick=5,
                    showgrid=True, gridcolor="rgba(0,0,0,0.06)"),
-        yaxis=dict(title="<b>Scope 1+2 Emissions (tCO2e)</b>",
+        yaxis=dict(title="<b>Total Emissions S1+S2+S3 (tCO2e)</b>",
                    showgrid=True, gridcolor="rgba(0,0,0,0.06)", rangemode="tozero"),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        margin=dict(l=20, r=20, t=40, b=20),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        margin=dict(l=20, r=20, t=60, b=20),
     )
     st.plotly_chart(fig, use_container_width=True)
 
-    # Interim milestones table
-    st.markdown("#### Key Net-Zero Milestones")
-    milestones = nz[nz["Year"].isin([2025, 2030, 2035, 2040, 2045, 2050])].copy()
-    milestones["Reduction vs 2024"] = (
-        (milestones["Net_Zero_Commitment_tCO2e"] - hist_emissions[-1]) / hist_emissions[-1] * 100
-    )
-    milestones["Net_Zero_Commitment_tCO2e"] = milestones["Net_Zero_Commitment_tCO2e"].apply(
-        lambda v: f"{v:,.0f}"
-    )
-    milestones["Reduction vs 2024"] = milestones["Reduction vs 2024"].apply(lambda v: f"{v:+.1f}%")
-    milestones = milestones.rename(columns={"Net_Zero_Commitment_tCO2e": "Committed Emissions (tCO2e)"})
+    # Milestones table — comparing scenarios at key years
+    st.markdown("#### Scenario Comparison at Key Milestones (tCO2e)")
+    milestones = nz[nz["Year"].isin([2024, 2030, 2035, 2040, 2045, 2050])].copy()
+    milestones["BAU"] = milestones["BAU"].apply(lambda v: f"{v:,.0f}")
+    milestones["NetZero"] = milestones["NetZero"].apply(lambda v: f"{v:,.0f}")
+    milestones["ProposedActions"] = milestones["ProposedActions"].apply(lambda v: f"{v:,.0f}")
+    milestones = milestones.rename(columns={
+        "BAU": "Scenario 1: BAU",
+        "NetZero": "Scenario 2: Net Zero",
+        "ProposedActions": "Scenario 3: Proposed",
+    })
     st.dataframe(milestones, use_container_width=True, hide_index=True)
+
+    st.info(
+        "**Recommendation:** Scenario 3 (Proposed Actions) aligns with TSMC's published "
+        "commitment of returning to 2020 emission levels by 2030 and reaching net-zero by 2050. "
+        "It is the only scenario that combines aggressive near-term reductions with a credible "
+        "long-term glide path, satisfying SBTi 1.5°C alignment criteria."
+    )
