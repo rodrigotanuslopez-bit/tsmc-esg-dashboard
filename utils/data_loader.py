@@ -99,10 +99,8 @@ def format_value(value: float, unit: str) -> str:
 
 @st.cache_data
 def load_peer_comparison() -> dict:
-    """
-    Load peer comparison data for TSMC, NVIDIA, ASML, and Broadcom.
-    """
-    peer_data = {
+    """Peer comparison data for TSMC vs NVIDIA, ASML, Broadcom (FY2024)."""
+    return {
         'ratings': {
             'TSMC': {'MSCI': 'AA', 'Sustainalytics': 13.57, 'S&P': 99, 'RepRisk': 'BB', 'Bloomberg': 5.7},
             'NVIDIA': {'MSCI': 'AA', 'Sustainalytics': 12.45, 'S&P': 93, 'RepRisk': 'CCC', 'Bloomberg': 6.6},
@@ -126,4 +124,6 @@ def load_peer_comparison() -> dict:
             'esg_linked_pay': {'TSMC': True, 'NVIDIA': True, 'ASML': True, 'Broadcom': True}
         }
     }
-    return peer_data
+
+
+
