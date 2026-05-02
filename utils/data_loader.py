@@ -36,7 +36,10 @@ def load_kpi_long() -> pd.DataFrame:
 
 @st.cache_data
 def load_net_zero() -> pd.DataFrame:
-    """Load net-zero trajectory data (2025-2050)."""
+    """Load net-zero trajectory scenarios (2019-2050).
+
+    Columns: Year, BAU, NetZero, ProposedActions (all in tCO2e, S1+S2+S3 total).
+    """
     return pd.read_csv(DATA_DIR / "net_zero_trajectory.csv")
 
 
