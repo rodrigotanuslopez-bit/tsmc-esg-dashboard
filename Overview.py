@@ -4,6 +4,8 @@ Executive overview for board directors covering company profile, materiality
 matrix, and the Net-Zero 2050 trajectory with three forward-looking scenarios.
 """
 
+from pathlib import Path
+
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
@@ -32,20 +34,37 @@ st.set_page_config(
 apply_global_styling()
 
 # ---------------------------------------------------------------------------
+# Logo path (graceful fallback if file is missing)
+# ---------------------------------------------------------------------------
+LOGO_PATH = Path(__file__).parent / "assets" / "Tsmc_svg.png"
+LOGO_AVAILABLE = LOGO_PATH.exists()
+
+# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 with st.sidebar:
-    st.image("assets/Tsmc.svg.png", width=180)
+    if LOGO_AVAILABLE:
+        st.image(str(LOGO_PATH), width=180)
+    else:
+        st.markdown(
+            """
+            <div style="text-align:center; padding: 0.5rem 0;">
+                <h2 style="color: white; margin-bottom: 0;">TSMC</h2>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
     st.markdown(
         """
-        <p style="color: #cccccc; font-size: 0.85rem; text-align: center; margin-top: 0.25rem;">
+        <p style="color: #cccccc; font-size: 0.85rem; text-align: center;
+                  margin-top: 0.5rem; margin-bottom: 0.75rem;">
             ESG Director Dashboard
         </p>
-        <hr style="border-color: rgba(255,255,255,0.2);">
+        <hr style="border-color: rgba(255,255,255,0.2); margin-top: 0;">
         """,
         unsafe_allow_html=True,
     )
-    st.markdown("---")
     st.caption("Reporting period: FY2020 - FY2024")
     st.caption("Source: TSMC Sustainability Report 2024")
     st.caption("Assurance: DNV Business Assurance Co., Ltd.")
