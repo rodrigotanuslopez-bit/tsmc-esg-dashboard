@@ -35,14 +35,12 @@ apply_global_styling()
 # Sidebar
 # ---------------------------------------------------------------------------
 with st.sidebar:
+    st.image("assets/Tsmc.svg.png", width=180)
     st.markdown(
-        f"""
-        <div style="text-align:center; padding: 0.5rem 0 1rem 0;">
-            <h2 style="color: white; margin-bottom: 0;">TSMC</h2>
-            <p style="color: #cccccc; font-size: 0.85rem; margin-top: 0.25rem;">
-                ESG Director Dashboard
-            </p>
-        </div>
+        """
+        <p style="color: #cccccc; font-size: 0.85rem; text-align: center; margin-top: 0.25rem;">
+            ESG Director Dashboard
+        </p>
         <hr style="border-color: rgba(255,255,255,0.2);">
         """,
         unsafe_allow_html=True,
