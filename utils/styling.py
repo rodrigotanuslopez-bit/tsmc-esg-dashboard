@@ -187,12 +187,18 @@ def apply_global_styling():
 
 
 def page_header(title: str, subtitle: str = "", pillar: str | None = None):
-    """Render a consistent page header with optional pillar badge."""
+    """Render a consistent page header with optional pillar badge.
+
+    Note: HTML must be on a single line. Streamlit's markdown parser treats
+    HTML blocks with blank lines + 4+ space indentation as code blocks, even
+    with unsafe_allow_html=True. Single-line HTML avoids the issue when
+    pillar is None (which leaves an empty {badge_html} placeholder).
+    """
     badge_html = ""
     if pillar:
-        badge_class = {"E": "badge-e", "S": "badge-s", "G": "badge-g", "F": "badge-f"}.get(
-            pillar, ""
-        )
+        badge_class = {
+            "E": "badge-e", "S": "badge-s", "G": "badge-g", "F": "badge-f",
+        }.get(pillar, "")
         badge_label = {
             "E": "ENVIRONMENTAL",
             "S": "SOCIAL",
@@ -201,14 +207,21 @@ def page_header(title: str, subtitle: str = "", pillar: str | None = None):
         }.get(pillar, "")
         badge_html = f'<span class="badge {badge_class}">{badge_label}</span>'
 
-    st.markdown(
-        f"""
-        <div style="margin-bottom: 1.5rem;">
-            {badge_html}
-            <h1 style="display:inline-block; margin-left: 0.5rem; border-bottom:none;">{title}</h1>
-            {f'<p style="color: {COLORS["tsmc_charcoal"]}; font-size: 1.05rem; margin-top: 0.25rem;">{subtitle}</p>' if subtitle else ''}
-            <hr style="margin-top: 0.5rem;"/>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    subtitle_html = ""
+    if subtitle:
+        subtitle_html = (
+            f'<p style="color: {COLORS["tsmc_charcoal"]}; font-size: 1.05rem; '
+            f'margin-top: 0.25rem;">{subtitle}</p>'
+        )
+
+    # Single-line HTML to bypass markdown's code-block-on-indent rule
+    html = (
+        f'<div style="margin-bottom: 1.5rem;">'
+        f'{badge_html}'
+        f'<h1 style="display:inline-block; margin-left: 0.5rem; border-bottom:none;">{title}</h1>'
+        f'{subtitle_html}'
+        f'<hr style="margin-top: 0.5rem;"/>'
+        f'</div>'
     )
+
+    st.markdown(html, unsafe_allow_html=True)
