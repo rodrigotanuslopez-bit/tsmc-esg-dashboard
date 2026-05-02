@@ -96,3 +96,34 @@ def format_value(value: float, unit: str) -> str:
     if unit == "tCO2e/$M":
         return f"{value:.2f}"
     return f"{value:,.2f}"
+
+@st.cache_data
+def load_peer_comparison() -> dict:
+    """
+    Load peer comparison data for TSMC, NVIDIA, ASML, and Broadcom.
+    """
+    peer_data = {
+        'ratings': {
+            'TSMC': {'MSCI': 'AA', 'Sustainalytics': 13.57, 'S&P': 99, 'RepRisk': 'BB', 'Bloomberg': 5.7},
+            'NVIDIA': {'MSCI': 'AA', 'Sustainalytics': 12.45, 'S&P': 93, 'RepRisk': 'CCC', 'Bloomberg': 6.6},
+            'ASML': {'MSCI': 'AAA', 'Sustainalytics': 8.67, 'S&P': 96, 'RepRisk': 'AA', 'Bloomberg': 6.82},
+            'Broadcom': {'MSCI': 'AA', 'Sustainalytics': 20.11, 'S&P': 57, 'RepRisk': 'BB', 'Bloomberg': 4.99}
+        },
+        'environmental': {
+            'renewable_energy_pct': {'TSMC': 13.18, 'NVIDIA': 68.72, 'ASML': 78.68, 'Broadcom': 29.35},
+            'scope1_mt': {'TSMC': 1941670, 'NVIDIA': 11896, 'ASML': 24000, 'Broadcom': 53648},
+            'scope2_market_mt': {'TSMC': 10957400, 'NVIDIA': 40555, 'ASML': 9000, 'Broadcom': 166752},
+            'water_recycling_pct': {'TSMC': 88.1, 'ASML': 75.0, 'Industry_Avg': 75.0},
+            'waste_diversion_pct': {'TSMC': 97.0, 'ASML': 74.0}
+        },
+        'social': {
+            'trir': {'TSMC': 0.133},
+            'voluntary_turnover_pct': {'TSMC': 3.4, 'ASML': 3.9}
+        },
+        'governance': {
+            'board_independence_pct': {'TSMC': 70, 'NVIDIA': 85, 'ASML': 87, 'Broadcom': 92, 'Peer_Median': 88},
+            'women_on_board_pct_2024': {'TSMC': 20, 'NVIDIA': 27, 'ASML': 29, 'Broadcom': 25},
+            'esg_linked_pay': {'TSMC': True, 'NVIDIA': True, 'ASML': True, 'Broadcom': True}
+        }
+    }
+    return peer_data
