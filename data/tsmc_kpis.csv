@@ -3,7 +3,7 @@ E,Carbon,Scope 1 GHG Emissions,tCO2e,2004841,2151937,2018789,1596031,1825872
 E,Carbon,Scope 2 GHG Emissions (Market-Based),tCO2e,7459856,8152497,9539765,10187387,10957397
 E,Carbon,Scope 2 GHG Emissions (Location-Based),tCO2e,8282509,9196964,10887145,11466118,12674921
 E,Carbon,Scope 3 GHG Emissions (Total),tCO2e,5511486,6049256,7429158,7616655,8223173
-E,Carbon,Carbon Intensity (per $M Revenue),tCO2e/$M,197.78,181.34,152.32,170.05,144.82
+E,Carbon,Carbon Intensity (per $M Revenue),tCO2e/$M,312.94,282.70,250.23,279.96,237.98
 E,Energy,Total Energy Consumption,GWh,16919,19192,22423,24775,27477
 E,Energy,Renewable Energy Percentage,%,7.6,9.2,10.4,11.2,14.1
 E,Water,Total Water Withdrawal,Million MT,77.3,82.8,105.0,113.6,128.8
